@@ -98,5 +98,26 @@ o	Provides support for Device Firmware Upgrades via USB without requiring specia
 
 
 
+CONNECTION DIGRAM 
+
+
+<img width="940" height="849" alt="image" src="https://github.com/user-attachments/assets/f735444f-81b5-4337-9993-38b1232c34fa" />
+
+
+                                        CHAPTER-2
+
+2.1 Applications of Aqua Feedboat
+The autonomous fish feeder boat has several practical applications, particularly in the field of aquaculture.
+Firstly, it can be used for automated fish feeding in aquaculture farms. The boat eliminates the need for manual labor by automatically distributing fish feed across the pond or lake. This ensures consistent and timely feeding, which is crucial for the healthy growth of fish.
+Secondly, the boat is equipped with pH, turbidity, and temperature sensors, allowing it to perform real-time water quality monitoring. This feature helps aquaculture operators maintain ideal water conditions and detect any environmental changes that could negatively affect fish health.
+Thirdly, the system allows remote operation of feeding tasks. Using an RC transmitter, the operator can control the boat manually or switch it to autonomous mode without physically approaching the water body. This is especially useful for large or difficult-to-access ponds.
+The boat also supports efficient feed distribution. Its autonomous navigation ensures that feed is evenly spread over a defined path, reducing waste and improving feed conversion efficiency.
+Additionally, the boat uses a LoRa module to send sensor data to a base station. This enables data logging and analysis, allowing users to review historical water quality trends and make informed decisions to enhance fish farm management.
+Another application is in large or remote aquaculture sites, where manual feeding is impractical. The autonomous boat can cover long distances and operate independently, making it ideal for such environments.
+Finally, the integration of automation and environmental monitoring promotes sustainable fish farming practices. By reducing manual intervention and optimizing resource usage, the system supports efficient and eco-friendly aquaculture operations.
+
+
+
+
 
 
