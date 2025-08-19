@@ -117,7 +117,96 @@ Another application is in large or remote aquaculture sites, where manual feedin
 Finally, the integration of automation and environmental monitoring promotes sustainable fish farming practices. By reducing manual intervention and optimizing resource usage, the system supports efficient and eco-friendly aquaculture operations.
 
 
+CHAPTER-3
+          Aqua Feedboat Setup and Operation Guide
+3.1 Fish Feeder Boat – Basic Manual Setup + Flashing firmware                      (2 Thrusters + RC Control)
+ To set up your boat for manual control using a RadioMaster RC transmitter and two APSQEEN BLDC motors (thrusters), powered by a 24V battery and controlled by an Eagle i flight controller running iNav firmware.
 
+ Hardware List
+Component	Description
+Eagle i Flight Controller	Main brain of the boat running iNav
+RadioMaster TX12 (EdgeTX)	RC transmitter used to control the boat
+RadioMaster RP1 ELRS	RC receiver to receive control signals
+2x APSQEEN BLDC Motors + ESCs	Motors for propulsion and steering
+24V Battery	Powers motors and other electronics
+24V to 5V Converter	Powers the Eagle i flight controller
+ Power Setup
+1.	Main Power:
+o	Connect your 24V battery to a power on the control box
+o	Use a 24V to 5V converter to power the Eagle i flight controller.
+o	Connect the converter's 5V output to the 5V and GND pins of the flight controller.
+2.	Motor Power:
+o	Connect each BLDC motor to its respective ESC.
+o	Connect both ESCs' power (24V) and GND lines to the battery.
+o	Connect each ESC's signal wire to the Motor 1 and Motor 2 PWM outputs on the flight controller.
+
+ Receiver (RP1 ELRS) Wiring
+1.	Connect the RP1 ELRS receiver to a UART port on the flight controller:
+o	RP1 TX → FC RX
+o	RP1 RX → FC TX
+o	RP1 5V → FC 5V
+o	RP1 GND → FC GND
+2.	In iNav Configurator (later), you’ll enable Serial RX on the UART port used.
+
+
+3.2                                 Flashing Firmware in Eagle-i 
+
+<img width="709" height="399" alt="image" src="https://github.com/user-attachments/assets/bfcc3341-e355-42f6-93bf-139b64a1e92f" />
+
+
+ Flash INAV.hex Firmware (Local) on Eagle-i
+  Prerequisites:
+•	INAV Configurator installed
+Download from GitHub
+•	Flight controller in DFU mode
+•	Your .hex file ready on your computer
+
+
+ Steps:
+1. Launch INAV Configurator
+Open INAV Configurator (use latest version if possible).
+
+2. Connect the Board in DFU Mode
+Make sure the Eagle-i flight controller:
+•	Is connected via USB
+•	Shows DFU in the top-right port dropdown of INAV Configurator
+(If it says “No DFU detected,” check that the boot button was held when plugging it in.)
+
+
+3. Go to "Firmware Flasher" Tab
+•	On the left sidebar, select Firmware Flasher.
+
+
+<img width="704" height="396" alt="image" src="https://github.com/user-attachments/assets/ea36ecb0-6ed7-4859-811f-05583969b65e" />
+
+
+4. Load Firmware from File
+•	Click "Load firmware [Local]"
+•	Select your .hex file (e.g., EAGLEI.hex)
+
+5. Flash the Firmware
+•	Hit "Flash Firmware"
+•	It should start writing the firmware. You’ll see a progress bar.
+•	Wait for “Flashing successful” message.
+
+      Disconnect and reconnect the board (this time without the boot button).
+
+•	Go to the “Connect” screen and verify the firmware boots.
+•	Then configure your board in INAV Configurator (ports, mixer, sensors, etc.)
+
+
+
+Troubleshooting
+If anything fails:
+•	Try a different USB cable or port
+•	Make sure no other apps are using the COM port
+•	If DFU is not showing up, you might need Zadig to reinstall the driver (want help with that?)
+
+1.	Connections:
+o	Motors: ESCs connected to the PWM outputs of the RMA board.
+o	Sensors: GPS and compass interfaced via UART or I2C ports for navigation.
+o	Receiver: RadioMaster RP1 ELRS receiver linked through UART for real-time communication.
+o	Power: A dedicated power module to ensure stable power supply.
 
 
 
