@@ -208,5 +208,72 @@ o	Sensors: GPS and compass interfaced via UART or I2C ports for navigation.
 o	Receiver: RadioMaster RP1 ELRS receiver linked through UART for real-time communication.
 o	Power: A dedicated power module to ensure stable power supply.
 
+Calibration of RMA Board Using iNav Configurator
+1.	Connect the Board:
+o	Use a USB-C cable to connect the RMA board to your PC.
+o	Open iNav Configurator and click Connect.
+o	Select the model type for your application (e.g., "Boat" for safety boat configuration).
+
+
+<img width="584" height="329" alt="image" src="https://github.com/user-attachments/assets/fb190e7d-e983-4bab-8f38-19d3f4c67cba" />
+
+
+2.	Calibrate Accelerometer:
+o	Follow the on-screen instructions to calibrate the accelerometer  
+
+<img width="623" height="350" alt="image" src="https://github.com/user-attachments/assets/23fe6863-9bde-4ca2-ad63-020738f40ab7" />
+
+3.	Mixer Configuration:
+o	Navigate to the Mixer tab.
+o	Select the platform type (e.g., "Boat").
+o	Add new mixer rules for the motor configuration as required.
+
+
+<img width="648" height="364" alt="image" src="https://github.com/user-attachments/assets/71ec9194-dba2-4db1-8858-ae124d3bd59c" />
+4.	Output Setup:
+o	Go to the Output tab.
+o	Enable motor and servo outputs.
+o	Set the appropriate ESC protocol for your motor.
+o	Enable Stop Motors on Low Throttle.
+o	Set Motor Idle Power to 0.
+o	Enable Reversible Motors Mode.
+
+<img width="673" height="378" alt="image" src="https://github.com/user-attachments/assets/4397b60c-adb2-462f-a75f-0efe5b4bddfd" />
+
+5.	Ports Configuration:
+o	Check the Ports tab to ensure Serial RX is enabled.
+
+<img width="720" height="405" alt="image" src="https://github.com/user-attachments/assets/df2d1a79-85ee-4a64-889a-3c89a6ffb263" />
+6.	Configuration Tab:
+o	Enable the following options:
+	GPS for Navigation and Telemetry.
+	Telemetry Output.
+	Reversible Motors Mode.
+	Motor and Servo Outputs.
+<img width="836" height="470" alt="image" src="https://github.com/user-attachments/assets/c685cf3d-1618-4020-aa41-47202e5309fa" />
+7.	Modes Setup:
+o	In the Modes tab:
+	Assign the Arm mode to a channel on your RC remote.
+	Set the range for arming the system.
+o	Ensure your RC remote is connected to the receiver, which is linked to the RMA board.
+
+<img width="642" height="361" alt="image" src="https://github.com/user-attachments/assets/8c6c1ed8-c13f-4245-9cc8-c59fe9facfa6" />
+8.	Receiver Configuration:
+o	In the Receiver tab:
+	Set Receiver Mode to Serial.
+	Set Serial Receiver Provider to CRSF (if using RadioMaster RC remote or as per your transmitter).
+
+<img width="746" height="420" alt="image" src="https://github.com/user-attachments/assets/949ab9e4-479b-4a60-8bb2-7e5ffc353631" />
+9.	CLI Commands:
+o	Open the CLI tab and enter the following commands:
+	set min_check =  set the minimum value
+	set max_throttle = set the maximum value
+o	Save the settings by typing save.
+
+<img width="809" height="455" alt="image" src="https://github.com/user-attachments/assets/ff33eccf-7c04-4e23-8697-9e202da7b791" />
+
+
+
+
 
 
