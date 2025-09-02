@@ -313,8 +313,254 @@ o	Save the settings by typing save.
 
 
 
+                        BASIC CONNECTION DIGRAM OF FLIGHT CONTROLLER WITH 2 MOTOR
+                        
+
+
+<img width="940" height="1221" alt="image" src="https://github.com/user-attachments/assets/853cf1ed-5458-4e80-aaeb-ac86b87e45e3" />
 
 
 
+
+                      Communication between transmitter and receiver
+                      
+
+
+1.	Transmitter and Receiver Communication:
+o	You are using the RadioMaster TX12 RC transmitter with the ELRS (ExpressLRS) protocol, and the RadioMaster RP1 Nano ELRS receiver is connected to the RMA flight controller.
+o	The transmitter sends control commands (throttle, yaw, pitch, roll) to the receiver over the ELRS protocol.
+2.	Receiver and RMA Board:
+o	The RP1 Nano receiver is connected to the UART port of the RMA flight controller.
+o	The receiver communicates with the flight controller to relay the commands from the transmitter for controlling the boat’s movements.
+3.	Telemetry Data:
+o	The RMA board generates telemetry data such as GPS position, battery status, and other metrics.
+o	This data is sent back to the RP1 Nano receiver through the same UART connection.
+4.	Telemetry Feedback to the Transmitter:
+o	The RP1 Nano receiver uses the CRSF (Crossfire) protocol to send telemetry data back to the TX12 transmitter.
+o	The transmitter displays this telemetry data, allowing you to monitor the boat's status.
+5.	Control and Monitoring:
+o	With this setup, you can control the boat using the transmitter and simultaneously view telemetry data directly on the transmitter's screen.
+
+
+
+
+3.3                                    RADIOMASTER  TX12  setup
+
+
+
+<img width="508" height="508" alt="image" src="https://github.com/user-attachments/assets/93ef6288-8605-4e8d-b283-430bb1458bfa" />
+
+
+    how to:
+1.	Bind RadioMaster RC to RP1 ELRS Receiver
+2.	Add and configure channels (for switches, etc.)
+3.	View telemetry data
+
+1. Binding RadioMaster to RP1 ELRS Receiver (Bind Method)  
+1.	Power off receiver.
+2.	Power on and off 3 times the receiver  
+o	The LED will start fast blinking = Bind mode.
+3.	On the transmitter:
+System → Tools → ExpressLRS → [Bind]
+4.	Wait 5–10 seconds.
+o	LED on RP1 becomes solid = bound.
+ Now your receiver is bound to the transmitter!
+
+
+
+2.Add Channels to Switches (for flight modes, relays, etc.)
+1.	On the RadioMaster transmitter:
+o	Go to Model Settings → Inputs
+2.	Add Inputs:
+o	Example:
+	Input 1 = Throttle (CH1)
+	Input 5 = SA Switch → for mode control
+	Input 6 = SB Switch → for feeder
+3.	Go to: Model Settings → Mixes
+4.	Add mixes for each channel:
+o	Example:
+                              CH5 → Source: SA
+                              CH6 → Source: SB
+                      ✅ Now CH5 and CH6 control two switches.
+
+   3. View Telemetry (Battery, GPS, etc.)
+A. Enable Telemetry on Flight Controller
+1.	Connect FC to Configurator (INAV or Betaflight).
+2.	Go to Ports tab:
+o	Set in UART 3 on telemetry section enable mavlink and set the baud rate to maximum 
+o	In the receiver  tab select mavlink in serial reciver provider  
+3.	Go to Configuration tab:
+o	Enable Telemetry option.
+4.	Save and Reboot FC.
+
+
+
+B. View Telemetry on Transmitter
+1.	On RadioMaster:
+Model Settings → Telemetry → Discover new sensors
+2.	After few seconds, you’ll see:
+o	RSSI
+o	Battery voltage
+o	GPS
+o	Current draw
+o	Flight mode
+o	More depending on FC setup
+✅ You can assign telemetry sensors to your home screen or sound alerts.
+
+ 2       Aqua-Feedboat – Autonomous Navigation Setup
+         
+•	Assign a switch to enable Autonomous (NAV) mode.
+•	Upload waypoint missions.
+•	Automatically load the mission on boot.
+•	Enable Return to Home (RTH) in case of RC signal loss or on command.
+
+ Prerequisites
+You should already have:
+•	iNav flashed on Eagle i flight controller.
+•	Motors and RC receiver connected.
+•	Boat working in Manual Mode.
+
+
+
+
+  Required Software  
+•	iNav Configurator
+•	(Optional) mission planner – for easier waypoint planning
+
+1️ Assign Autonomous Modes to a Switch
+1.	Connect flight controller via USB → open iNav Configurator.
+2.	Go to Modes tab.
+3.	Add these modes:
+o	MANUAL: For manual RC control.
+o	NAV WP: For automatic waypoint following.
+o	NAV POSHOLD (optional): For holding position (like stop & hover).
+o	NAV RTH: For Return to Home (manual or failsafe).
+4.	Assign a switch from your RC transmitter (e.g., SA or SB) to each mode using AUX channels.
+5.	Click Save.
+
+2️ Setup Waypoint Mission (Using iNav Configurator)
+1.	Go to "Missions" tab in iNav Configurator.
+2.	Click "Add Waypoint" and set coordinates.
+o	You can enter coordinates manually
+3.	Add a few points around your water body.
+o	Altitude: 0 (you’re on water)
+o	Speed: ~2–5 m/s
+4.	Once finished:
+o	Click Upload Mission → saves waypoints to flight controller.
+o	Click "Save to Flash" (important!)
+→ Ensures mission loads automatically on boot.
+
+3️ Set Home Position & Return To Home (RTH)
+A. Home Point Setup
+1.	Home is automatically set on GPS lock at power-up.
+2.	You can verify the home position in the OSD tab or via CLI command:
+
+4️ Test Before Launching in Water
+1.	With battery connected and GPS lock acquired:
+o	Switch to NAV WP mode → boat should wait for arming
+o	ARM the boat → boat should begin moving toward waypoint 1
+2.	During mission:
+o	Switch to RTH → boat will return to GPS home point
+o	Switch back to Manual → you regain RC control
+
+
+
+       
+3.4     WAYPOINT NAVIGATION USING EAGLE-i WITH MISSION PLANNER 
+
+Way Point Mission Workflow with EAGLE i Flight Controller, RadioMaster TX Transmitter & ELRS Ecosystem
+
+1   Configure the EAGLE i Flight Controller for a Boat
+1.	Load INAV firmware appropriate to your board (e.g., INAV 8.1 “Eagle”).
+2.	On the Configuration ▶ Mixer tab choose Boat/Rover layout and assign:
+Output	Function	Note
+M1	Motor A (Port)	Normal or reverse PWM as needed
+M2	Motor B (Starboard)	Yaw mix for differential thrust
+
+
+<img width="505" height="284" alt="image" src="https://github.com/user-attachments/assets/19d40763-0ddf-4bd4-9720-0b325c85c54e" />
+
+2   put the reciver in wifi mode. a wifi will be visible in your laptop and click on the hotspot, you will be directed to a browser on which you can set the receiver 
+
+
+
+<img width="940" height="529" alt="image" src="https://github.com/user-attachments/assets/e0aed88f-4246-472c-9116-d607d5497c76" />
+
+
+In the model setup select mavlink as serial protocol
+
+
+
+<img width="940" height="529" alt="image" src="https://github.com/user-attachments/assets/16a7fa32-1ef6-460e-8ff9-99b4a732cc9a" />
+
+You can see a option tab next to model you can set baud rate 460800 and click save
+
+
+<img width="940" height="529" alt="image" src="https://github.com/user-attachments/assets/c6221072-398c-4869-b912-4afdd4ce6211" />
+
+
+
+3   Ports tab – set a spare UART to MAVLink 1 output if you want telemetry to Mission                     Planner in parallel with INAV MSP.
+Receiver tab
+o	Serial based receiver = MAVLINK
+o	Stick protocol to FC is still MAVLINK
+o	RSSI Channel = Disable 
+
+
+<img width="720" height="405" alt="image" src="https://github.com/user-attachments/assets/ce148a78-0dd1-4907-9cae-2a32f19b9c70" />
+
+
+
+
+<img width="707" height="398" alt="image" src="https://github.com/user-attachments/assets/36d67aa8-1f42-4a31-9a32-b4fd0bad8fb0" />
+
+
+
+4   Link ELRS Module to Mission Planner
+1.	Plug the ELRS RF module’s USB C into the laptop (acts as a USB UART).
+2.	In Device Manager note the COM port.
+3.	Launch Mission Planner ▶ INITIAL SETUP ▶ Wizard.
+4.	Baud = 460 800, COM = port from step 2, CONNECT.
+o	Mission Planner should display MAVLink heartbeat within seconds.
+
+
+
+
+<img width="680" height="382" alt="image" src="https://github.com/user-attachments/assets/6b9e274e-e60a-41a6-85f8-5e75cd274284" />
+
+
+
+
+5   Assign a “NavWP” Channel inside INAV
+1.	Modes tab → add a line, select Nav WP.
+2.	Pick an unused AUX channel (e.g., CH7).
+3.	Set the slider range (e.g., 1500 µs–2000 µs => ON).
+On the TX create a SAFETY/3 position switch mapped to the same channel.
+
+
+
+
+<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/3f3ea629-9213-42b8-9d62-8dfa33b99723" />
+
+
+
+6   Plan Your Way Point Path
+1.	In Mission Planner click PLAN.
+2.	Drop way points on the map; choose WAYPOINT command, alt = 0 m.
+3.	Click Write WPs to upload to the FC (stored in flash).
+
+
+
+<img width="662" height="373" alt="image" src="https://github.com/user-attachments/assets/fd18caef-7a99-497e-8a7f-8e1924f17cf5" />
+
+
+
+
+7   Execute the Mission on the Water
+1.	Power the boat and acquire GPS 3D fix 
+2.	Arm in MANUAL and test throttle + steering.
+3.	Flip the NavWP switch → FC enters AUTO and starts the uploaded mission.
+4.	Monitor telemetry in Mission Planner
+5.	To abort, toggle back to MANUAL or disarm.
 
 
